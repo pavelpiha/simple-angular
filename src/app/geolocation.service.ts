@@ -12,7 +12,7 @@ export class GeolocationService {
         callback(position.coords);
       },
       (error) => {
-        //TODO: log the error in the system
+        console.error('Geolocation error', error);
         callback(null);
       }
     );
@@ -31,6 +31,4 @@ export class GeolocationService {
       return `https://maps.google.com/?q=${query}`;
     }
   }
-
-  constructor() {}
 }

@@ -19,6 +19,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { FormsModule } from '@angular/forms';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, ListComponent, CoffeeComponent],
@@ -37,7 +41,7 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatSliderModule,
   ],
-  providers: [],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

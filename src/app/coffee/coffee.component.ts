@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Coffee } from '../logic/Coffee';
 import { GeolocationService } from '../geolocation.service';
 import { TastingRating } from '../logic/TastingRating';
+import { DataService } from '../data.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-coffee',
@@ -12,8 +14,28 @@ export class CoffeeComponent {
   coffee = new Coffee();
   types = ['Espresso', 'Ristretto', 'Americano', 'Cappuccino', 'Frappe'];
   tastingEnabled = false;
+  formType: 'editing' | 'inserting' = 'inserting';
 
-  constructor(private geolocation: GeolocationService) {}
+  constructor(
+    private geolocation: GeolocationService,
+    private data: DataService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.data.get(params['id'], (response: any) => {
+          this.coffee = response; // TODO: convert the object to a Coffee instance fromJSON()
+          this.formType = 'editing';
+          if (this.coffee.tastingRating) {
+            this.tastingEnabled = true;
+          }
+        });
+      }
+    });
+  }
 
   tastingRatingChanged(checked: boolean) {
     if (checked) {
@@ -34,7 +56,24 @@ export class CoffeeComponent {
     );
   }
 
-  cancel() {}
+  cancel() {
+    this.router.navigate(['/']);
+  }
 
-  save() {}
+  save() {
+    const resultFunction = (result: boolean) => {
+      if (result) {
+        this.router.navigate(['/']);
+      } else {
+        console.error('Something went wrong on save');
+      }
+    };
+
+    if (this.formType === 'inserting') {
+      let { ...insertedCoffee } = this.coffee;
+      this.data.save(insertedCoffee, resultFunction);
+    } else {
+      this.data.save(this.coffee, resultFunction);
+    }
+  }
 }
