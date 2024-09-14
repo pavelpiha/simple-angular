@@ -5,6 +5,7 @@
   "theme_color": "orange",
   "background_color": "#fafafa",
   "display": "standalone",
+  "display_override": ["window-controls-overlay"],
   "scope": "./",
   "start_url": "./?utm_source=pwa",
   "description": "This is the best app for keep track of the coffees that you consume and if you like them or not",

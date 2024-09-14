@@ -1,6 +1,19 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
+  "navigationRequestStrategy": "performance",
+  "dataGroups": [
+    {
+      "name": "api",
+      "urls": ["http://localhost:3000/*", "http://10.0.2.2:3000/*"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout": "500u",
+        "maxAge": "1d",
+        "maxSize": 50
+      }
+    }
+  ],
   "assetGroups": [
     {
       "name": "app",
@@ -21,7 +34,8 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+          "/assets/**",
+          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
     }

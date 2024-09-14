@@ -3,6 +3,7 @@ import { Coffee } from '../logic/Coffee';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { GeolocationService } from '../geolocation.service';
+import { UiService } from '../ui.service';
 
 @Component({
   selector: 'app-list',
@@ -15,7 +16,8 @@ export class ListComponent {
   constructor(
     private data: DataService,
     private router: Router,
-    private geolocation: GeolocationService
+    private geolocation: GeolocationService,
+    private ui: UiService
   ) {}
 
   goDetails(coffee: Coffee) {
@@ -47,5 +49,7 @@ export class ListComponent {
     this.data.getList((list: Coffee[]) => {
       this.list = list;
     });
+    this.ui.setTitle('Coffees');
+    this.ui.setThemeColor('orange');
   }
 }

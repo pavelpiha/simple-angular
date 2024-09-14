@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Coffee } from './logic/Coffee';
-import { PlaceLocation } from './logic/PlaceLocation';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DataService {
   endpoint: string;
+  coffeeEntity = '/coffees';
 
   constructor(private httpClient: HttpClient) {
     if (window.location.hostname === 'localhost') {
@@ -17,7 +17,6 @@ export class DataService {
       this.endpoint = 'http://10.0.2.2:3000';
     }
   }
-  coffeeEntity = '/coffees';
 
   getList(callback: Function) {
     this.httpClient
