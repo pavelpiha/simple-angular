@@ -7,10 +7,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DataService {
-  endpoint = 'http://localhost:3000';
-  coffeeEntity = '/coffees';
+  endpoint: string;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    if (window.location.hostname === 'localhost') {
+      this.endpoint = 'http://localhost:3000';
+    } else {
+      // For Android emulator
+      this.endpoint = 'http://10.0.2.2:3000';
+    }
+  }
+  coffeeEntity = '/coffees';
 
   getList(callback: Function) {
     this.httpClient
